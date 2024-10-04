@@ -59,9 +59,11 @@ with open('raw_data/games.json') as f:
                 """
                 INSERT INTO player_stats (
                     game_id, player_id, team_id, is_starter, minutes, points, assists,
-                    offensive_rebounds, defensive_rebounds, steals, blocks, turnovers, defensive_fouls, offensive_fouls
+                    offensive_rebounds, defensive_rebounds, steals, blocks, turnovers, defensive_fouls, offensive_fouls,
+                    freethrows_made, freethrows_attempted, twopointers_made, twopointers_attempted,
+                    threepointers_made, threepointers_attempted
                 ) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (game_id, player_id) DO UPDATE SET 
                     is_starter = EXCLUDED.is_starter,
                     minutes = EXCLUDED.minutes,
@@ -73,7 +75,14 @@ with open('raw_data/games.json') as f:
                     blocks = EXCLUDED.blocks,
                     turnovers = EXCLUDED.turnovers,
                     defensive_fouls = EXCLUDED.defensive_fouls,
-                    offensive_fouls = EXCLUDED.offensive_fouls
+                    offensive_fouls = EXCLUDED.offensive_fouls,
+                    freethrows_made = EXCLUDED.freethrows_made,
+                    freethrows_attempted = EXCLUDED.freethrows_attempted,
+                    twopointers_made = EXCLUDED.twopointers_made,
+                    twopointers_attempted = EXCLUDED.twopointers_attempted,
+                    threepointers_made = EXCLUDED.threepointers_made,
+                    threepointers_attempted = EXCLUDED.threepointers_attempted
+
                 """,
                 (
                     game['id'],  # game_id
@@ -89,7 +98,14 @@ with open('raw_data/games.json') as f:
                     player_stats.get('blocks', 0),  # blocks, default to 0
                     player_stats.get('turnovers', 0),  # turnovers, default to 0
                     player_stats.get('defensiveFouls', 0),  # defensive_fouls, default to 0
-                    player_stats.get('offensiveFouls', 0)  # offensive_fouls, default to 0
+                    player_stats.get('offensiveFouls', 0),  # offensive_fouls, default to 0
+                    player_stats.get('freeThrowsMade', 0), 
+                    player_stats.get('freeThrowsAttempted', 0),
+                    player_stats.get('twoPointersMade', 0),
+                    player_stats.get('twoPointersAttempted', 0),
+                    player_stats.get('threePointersMade', 0),
+                    player_stats.get('threePointersAttempted', 0),
+
                 )
             )
 
@@ -99,6 +115,47 @@ with open('raw_data/games.json') as f:
 
         for player_stats in game['awayTeam']['players']:
             insert_player_stats(player_stats, game['awayTeam']['id'])
+    
+
+with open('raw_data/games.json') as f:
+    games_data = json.load(f)
+
+    for game in games_data:
+        game_id = game['id']
+
+        # Loop through all players in the home team
+        for player_stats in game['homeTeam']['players']:
+            player_id = player_stats['id']
+
+            # Assuming each player has a list of shots taken in the stats
+            for shot in player_stats['shots']:
+
+                # Insert the shot into the shots table
+                cur.execute(
+                    """
+                    INSERT INTO shots (player_id, game_id, is_made, location_x, location_y)
+                    VALUES (%s, %s, %s, %s, %s)
+                    ON CONFLICT DO NOTHING;
+                    """,
+                    (player_id, game_id, shot.get('isMake',0), shot.get('locationX',0.0), shot.get('locationY', 0.0))
+                )
+
+        # Loop through all players in the away team
+        for player_stats in game['awayTeam']['players']:
+            player_id = player_stats['id']
+
+            # Assuming each player has a list of shots taken in the stats
+            for shot in player_stats['shots']:
+
+                # Insert the shot into the shots table
+                cur.execute(
+                    """
+                    INSERT INTO shots (player_id, game_id, is_made, location_x, location_y)
+                    VALUES (%s, %s, %s, %s, %s)
+                    ON CONFLICT DO NOTHING;
+                    """,
+                    (player_id, game_id, shot.get('isMake',0), shot.get('locationX',0.0), shot.get('locationY', 0.0))
+                )
 
 # Commit changes and close the connection
 conn.commit()
