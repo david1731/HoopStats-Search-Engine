@@ -34,15 +34,15 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy {
   ) {
 
   }
-  onSearch(): void {
-    if (this.searchQuery) {
-      this.http
-        .get<SearchResults>(`http://localhost:8000/api/v1/autocomplete?query=${this.searchQuery}`)
-        .subscribe((data) => {
-          this.results = data;
-        });
-    }
-  }
+  // onSearch(): void {
+  //   if (this.searchQuery) {
+  //     this.http
+  //       .get<SearchResults>(`http://localhost:8000/api/v1/autocomplete?query=${this.searchQuery}`)
+  //       .subscribe((data) => {
+  //         this.results = data;
+  //       });
+  //   }
+  // }
 
   ngOnInit(): void {
     this.playersService.getPlayerSummary(1).pipe(untilDestroyed(this)).subscribe(data => {
