@@ -21,10 +21,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
 import {MatOptionModule} from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
-
+import { FormsModule } from '@angular/forms'; 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +44,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatSelectModule,
     MatOptionModule,
     MatTabsModule,
+    FormsModule, 
     routing
   ],
   providers: [PlayersService],

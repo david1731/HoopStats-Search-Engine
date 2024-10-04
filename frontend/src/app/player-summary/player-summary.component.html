@@ -1,1 +1,16 @@
-<div class="placeholder">Place your content here!</div>
+<div class="search-container">
+    <h2>Search Players or Teams</h2>
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Enter player or team name"
+    />
+    <button (click)="onSearch()">Search</button>
+  
+    <div *ngIf="results">
+      <h3>Results:</h3>
+      <ul>
+        <li *ngFor="let result of results">{{ result.name }}</li>
+      </ul>
+    </div>
+  </div>
