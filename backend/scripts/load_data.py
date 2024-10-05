@@ -5,6 +5,7 @@ import json
 conn = psycopg2.connect(
     dbname="okc",
     user="okcapplicant",
+    password="thunder",
     host="localhost"
 )
 
