@@ -6,6 +6,7 @@
 .coverage
 .DS_Store
 .venv/
+.env
 ~$*
 
 # compiled output
