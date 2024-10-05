@@ -1,11 +1,12 @@
 import psycopg2
 import json
+from decouple import config
 
 # connect to database
 conn = psycopg2.connect(
-    dbname="okc",
-    user="okcapplicant",
-    password="thunder",
+    dbname=config('DBNAME'),
+    user=config('DBUSER'),
+    password=config('DBPASSWORD'),
     host="localhost"
 )
 
