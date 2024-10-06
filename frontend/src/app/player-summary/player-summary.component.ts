@@ -10,11 +10,6 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { PlayersService } from '../_services/players.service';
 import { HttpClient } from '@angular/common/http';
 
-interface SearchResults {
-  players: { id: number, name: string }[];
-  teams: { id: number, name: string }[];
-}
-
 // Define the interface for the shot
 interface Shot {
   isMake: boolean;
@@ -55,26 +50,26 @@ interface PlayerSummary {
 @Component({
   selector: 'player-summary-component',
   templateUrl: './player-summary.component.html',
-  styleUrls: ['./player-summary.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./player-summary.component.scss']
 })
-export class PlayerSummaryComponent implements OnInit, OnDestroy {
+export class PlayerSummaryComponent implements OnInit{
   searchQuery: string = '';
   results: any[] = [];
   playerSummary: PlayerSummary | null = null;
 
   constructor(
-    protected activatedRoute: ActivatedRoute,
-    protected cdr: ChangeDetectorRef,
-    protected playersService: PlayersService,
+    // protected activatedRoute: ActivatedRoute,
+    // protected cdr: ChangeDetectorRef,
+    // protected playersService: PlayersService,
     private http: HttpClient
   ) {}
 
   // Correctly declared onSearch method
   onSearch(): void {
     if (this.searchQuery) {
+      console.log('Searching for player ID:', this.searchQuery);
       // Make the API call to get the player summary
-      this.http.get<PlayerSummary>(`/api/v1/playerSummary/${this.searchQuery}`).subscribe(
+      this.http.get<PlayerSummary>(`http://localhost:8000/api/v1/playerSummary/${this.searchQuery}`).subscribe(
         (data: PlayerSummary) => {
           this.playerSummary = data;
         },
@@ -87,13 +82,13 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy {
 
   // ngOnInit method properly declared
   ngOnInit(): void {
-    this.playersService.getPlayerSummary(1).pipe(untilDestroyed(this)).subscribe(data => {
-      console.log(data.apiResponse);
-    });
+    // this.playersService.getPlayerSummary(1).pipe(untilDestroyed(this)).subscribe(data => {
+    //   console.log(data.apiResponse);
+    // });
   }
 
   // ngOnDestroy method properly declared, even if it's empty
-  ngOnDestroy(): void {
-    // Cleanup logic (if needed)
-  }
+  // ngOnDestroy(): void {
+  //   // Cleanup logic (if needed)
+  // }
 }
