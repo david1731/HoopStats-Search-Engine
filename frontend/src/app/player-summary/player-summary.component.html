@@ -9,21 +9,33 @@
   <div class="card p-4">
     <div class="search-container text-center">
       <h2 class="mb-4">Search Players or Teams</h2>
+      
+      <!-- Search Input Group -->
       <div class="input-group mb-3">
         <input
           type="text"
           class="form-control"
           [(ngModel)]="searchQuery"
           placeholder="Enter player or team name"
+          aria-label="Search Query"
+          aria-describedby="search-button"
         />
-        <button class="btn btn-primary">Search</button>
+        <button class="btn btn-primary" id="search-button" (click)="onSearch()">
+          Search
+        </button>
       </div>
 
-      <div *ngIf="results" class="mt-4">
+      <!-- Display Results -->
+      <div *ngIf="results?.length" class="mt-4">
         <h3>Results:</h3>
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let result of results">{{ result.name }}</li>
         </ul>
+      </div>
+
+      <!-- No Results Found -->
+      <div *ngIf="!results?.length && searchQuery" class="mt-4 text-danger">
+        <p>No results found for "{{ searchQuery }}"</p>
       </div>
     </div>
   </div>
