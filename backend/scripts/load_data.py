@@ -154,7 +154,7 @@ with open('raw_data/games.json') as f:
                     """
                     INSERT INTO shots (player_id, game_id, is_made, location_x, location_y)
                     VALUES (%s, %s, %s, %s, %s)
-                    ON CONFLICT DO NOTHING;
+                    ON CONFLICT ON CONSTRAINT unique_shot_per_game_player DO NOTHING;
                     """,
                     (player_id, game_id, shot.get('isMake',0), shot.get('locationX',0.0), shot.get('locationY', 0.0))
                 )

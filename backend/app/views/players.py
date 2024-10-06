@@ -39,6 +39,7 @@ class PlayerSummary(APIView):
                     WHERE ps.player_id = %s
                 """, [playerID])
                 player_stats = cursor.fetchall()
+                print(f"player Stats: {player_stats}")
 
             # Prepare the response structure
             response_data = {
@@ -61,6 +62,7 @@ class PlayerSummary(APIView):
                         WHERE player_id = %s AND game_id = %s
                     """, [playerID, game_id])
                     shots = cursor.fetchall()
+                    print(f"shots: {shots}, shots length: {len(shots)}")
 
                 # Prepare shot data
                 shots_data = [
