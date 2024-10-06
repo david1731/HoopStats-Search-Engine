@@ -1,3 +1,4 @@
+<!-- Bootstrap 5 Stylesheet Link -->
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
   rel="stylesheet"
@@ -8,7 +9,7 @@
 <div class="container mt-5">
   <div class="card p-4">
     <div class="search-container text-center">
-      <h2 class="mb-4">Search Players or Teams</h2>
+      <h2 class="mb-4">Search Players by ID</h2>
       
       <!-- Search Input Group -->
       <div class="input-group mb-3">
@@ -16,7 +17,7 @@
           type="text"
           class="form-control"
           [(ngModel)]="searchQuery"
-          placeholder="Enter player or team name"
+          placeholder="Enter player ID"
           aria-label="Search Query"
           aria-describedby="search-button"
         />
@@ -25,20 +26,52 @@
         </button>
       </div>
 
-      <!-- Display Results -->
-      <div *ngIf="results?.length" class="mt-4">
-        <h3>Results:</h3>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let result of results">{{ result.name }}</li>
-        </ul>
+      <!-- Error or No Results Message -->
+      <div *ngIf="!playerSummary && searchQuery" class="text-danger mt-3">
+        <p>No player found for ID "{{ searchQuery }}"</p>
       </div>
 
-      <!-- No Results Found -->
-      <div *ngIf="!results?.length && searchQuery" class="mt-4 text-danger">
-        <p>No results found for "{{ searchQuery }}"</p>
+      <!-- Player Summary Results -->
+      <div *ngIf="playerSummary" class="mt-4">
+        <h3>{{ playerSummary.name }}</h3>
+
+        <!-- Display each game's summary -->
+        <div *ngFor="let game of playerSummary.games" class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Game on {{ game.date }}</h5>
+            <p class="card-text">
+              <strong>Minutes:</strong> {{ game.minutes }},
+              <strong>Points:</strong> {{ game.points }},
+              <strong>Assists:</strong> {{ game.assists }},
+              <strong>Rebounds:</strong> Offensive - {{ game.offensiveRebounds }}, Defensive - {{ game.defensiveRebounds }},
+              <strong>Steals:</strong> {{ game.steals }},
+              <strong>Blocks:</strong> {{ game.blocks }},
+              <strong>Turnovers:</strong> {{ game.turnovers }},
+              <strong>Fouls:</strong> Offensive - {{ game.offensiveFouls }}, Defensive - {{ game.defensiveFouls }}
+            </p>
+
+            <!-- Free Throws and Shooting -->
+            <p class="card-text">
+              <strong>Free Throws:</strong> {{ game.freeThrowsMade }}/{{ game.freeThrowsAttempted }},
+              <strong>2PT:</strong> {{ game.twoPointersMade }}/{{ game.twoPointersAttempted }},
+              <strong>3PT:</strong> {{ game.threePointersMade }}/{{ game.threePointersAttempted }}
+            </p>
+
+            <!-- Display shots taken -->
+            <div *ngIf="game.shots.length > 0" class="mt-3">
+              <h6>Shots Taken:</h6>
+              <ul class="list-group">
+                <li *ngFor="let shot of game.shots" class="list-group-item">
+                  Shot {{ shot.isMake ? 'Made' : 'Missed' }} at (X: {{ shot.locationX }}, Y: {{ shot.locationY }})
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
  
