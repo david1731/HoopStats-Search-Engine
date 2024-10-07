@@ -21,7 +21,7 @@ export class PlayerSummaryResponseComponent implements OnInit, OnDestroy {
 
   endpoint: any;
   apiResponse: any;
-  playerID: number = 1;
+  playerName: string = '';
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -40,7 +40,7 @@ export class PlayerSummaryResponseComponent implements OnInit, OnDestroy {
   }
 
   fetchApiResponse(): void {
-    this.playersService.getPlayerSummary(this.playerID).pipe(untilDestroyed(this)).subscribe(data => {
+    this.playersService.getPlayerSummary(this.playerName).pipe(untilDestroyed(this)).subscribe(data => {
       this.endpoint = data.endpoint;
       this.apiResponse = JSON.stringify(data.apiResponse, null, 2);
     });
