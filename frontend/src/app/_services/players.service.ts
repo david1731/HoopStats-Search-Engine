@@ -14,8 +14,8 @@ export class PlayersService extends BaseService {
     super(http);
   }
 
-  getPlayerSummary(playerID: number): Observable<any> {
-    const endpoint = `${this.baseUrl}/playerSummary/${playerID}`;
+  getPlayerSummary(playerName: string): Observable<any> {
+    const endpoint = `${this.baseUrl}/playerSummary/${playerName}`;
 
     return this.get(endpoint).pipe(map(
       (data: Object) => {
