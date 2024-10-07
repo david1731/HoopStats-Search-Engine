@@ -9,19 +9,19 @@ LOGGER = logging.getLogger('django')
 class PlayerSummary(APIView):
     logger = LOGGER
 
-    def get(self, request, playerID):
-        """Return player summary data based on the playerID"""
+    def get(self, request, playerName):
+        """Return player summary data based on the playerName"""
 
         try:
             # Fetch player details using raw SQL
             with connection.cursor() as cursor:
-                cursor.execute("SELECT name FROM players WHERE id = %s", [playerID])
+                cursor.execute("SELECT id FROM players WHERE name ILIKE %s LIMIT 1;", [playerName])
                 player = cursor.fetchone()
                 
                 if not player:
                     return Response({"error": "Player not found"}, status=404)
 
-                player_name = player[0]
+                player_id = player[0]
 
             # Fetch all player stats and games using the correct SQL query
             with connection.cursor() as cursor:
@@ -37,13 +37,13 @@ class PlayerSummary(APIView):
                     FROM player_stats ps
                     JOIN games g ON ps.game_id = g.id
                     WHERE ps.player_id = %s
-                """, [playerID])
+                """, [player_id])
                 player_stats = cursor.fetchall()
                 # print(f"player Stats: {player_stats}")
 
             # Prepare the response structure
             response_data = {
-                "name": player_name,
+                "name": playerName,
                 "games": []
             }
 
@@ -60,7 +60,7 @@ class PlayerSummary(APIView):
                         SELECT is_made, location_x, location_y
                         FROM shots
                         WHERE player_id = %s AND game_id = %s
-                    """, [playerID, game_id])
+                    """, [player_id, game_id])
                     shots = cursor.fetchall()
                     # print(f"shots: {shots}, shots length: {len(shots)}")
 
