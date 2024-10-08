@@ -116,7 +116,7 @@ class PlayersList(APIView):
                 cursor.execute("SELECT id,name FROM players;")
                 players = cursor.fetchall()
             
-            LOGGER.info(f"Players data: {players}")
+            #LOGGER.info(f"Players data: {players}")
             player_list = [{"id": player[0], "name": player[1]} for player in players]
         except Exception as e:
             LOGGER.error(f"Error fetching player info: {str(e)}")
