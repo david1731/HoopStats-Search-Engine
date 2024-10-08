@@ -124,4 +124,20 @@ class PlayersList(APIView):
         
         return Response(player_list)
 
+class PlayerAutoComplete(APIView):
+    def get(self, request):
+        query = request.GET.get('query', '')
+        if not query:
+            return Response({"error": "No search term provided"})
+        
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT id,name FROM players WHERE name ILIKE %s LIMIT 10", ['%' + query + '%'])
+                players = cursor.fetchall()
+                results = [{"id" : row[0], "name" : row[1]} for row in players]
+            return Response({"players": results})
+        except Exception as e:
+            LOGGER.error(f"Error fetching player autocomplete: {{str(e)}}")
+            return Response({"error": "Internal Server Error"}, status=500)
+
 
