@@ -72,17 +72,14 @@ export class PlayerSummaryComponent implements OnInit{
   ) {}
 
   // ngOnInit method properly declared
-  ngOnInit(): void {
-    // this.playersService.getPlayerSummary(1).pipe(untilDestroyed(this)).subscribe(data => {
-    //   console.log(data.apiResponse);
-    // });
-  }
+  ngOnInit(): void {}
 
   onSearchChange(query: string): void {
     if (query.length > 1){
       this.http.get<PlayerSuggestion[]>(`http://localhost:8000/api/v1/playerAutocomplete?query=${query}`).subscribe(
         (data: PlayerSuggestion[]) => {
           this.suggestions = data;
+          console.log('Autocomplete Suggestions:', this.suggestions); // Log the suggestions
         },
         (error) => {
           console.error('Error fetching autocomplete suggestions', error);
