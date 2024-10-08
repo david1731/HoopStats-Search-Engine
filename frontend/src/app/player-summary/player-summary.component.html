@@ -28,7 +28,7 @@
 
       <!-- Error or No Results Message -->
       <div *ngIf="!playerSummary && searchQuery" class="text-danger mt-3">
-        <p>No player found for ID "{{ searchQuery }}"</p>
+        <p>"{{ searchQuery }} not found"</p>
       </div>
 
       <!-- Player Summary Results -->
