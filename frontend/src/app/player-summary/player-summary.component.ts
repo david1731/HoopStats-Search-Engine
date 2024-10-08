@@ -46,6 +46,11 @@ interface PlayerSummary {
   games: Game[];
 }
 
+interface PlayerSuggestion{
+  id: number;
+  name: string;
+}
+
 @UntilDestroy()
 @Component({
   selector: 'player-summary-component',
@@ -55,6 +60,8 @@ interface PlayerSummary {
 export class PlayerSummaryComponent implements OnInit{
   searchQuery: string = '';
   results: any[] = [];
+  suggestions: PlayerSuggestion[] = [];
+
   playerSummary: PlayerSummary | null = null;
 
   constructor(
@@ -64,12 +71,31 @@ export class PlayerSummaryComponent implements OnInit{
     private http: HttpClient
   ) {}
 
+  onSearchChange(query: string): void {
+    if (query.length > 1){
+      this.http.get<PlayerSuggestion[]>(`http://localhost:8000/api/v1/playerAutocomplete?query=${query}`).subscribe(
+        (data: PlayerSuggestion[]) => {
+          this.suggestions = data;
+        },
+        (error) => {
+          console.error('Error fetching autocomplete suggestions', error);
+        }
+      );
+    } else{
+      this.suggestions = []; // clear suggestions if the query is to short
+    }
+  }
+
+  onSelectPlayer(playerName: string): void{
+    this.searchQuery = playerName; // set the input value to the selected name
+    this.fetchPlayerSummary(playerName); // fetch the player summary based on the name 
+    this.suggestions = []; // clear suggestions after selection
+  }
+
   // Correctly declared onSearch method
-  onSearch(): void {
-    if (this.searchQuery) {
-      console.log('Searching for player ID:', this.searchQuery);
+  fetchPlayerSummary(playerName: string): void {
       // Make the API call to get the player summary
-      this.http.get<PlayerSummary>(`http://localhost:8000/api/v1/playerSummary/${this.searchQuery}`).subscribe(
+      this.http.get<PlayerSummary>(`http://localhost:8000/api/v1/playerSummary/${playerName}`).subscribe(
         (data: PlayerSummary) => {
           this.playerSummary = data;
         },
@@ -77,7 +103,6 @@ export class PlayerSummaryComponent implements OnInit{
           console.error('Error fetching player summary', error);
         }
       );
-    }
   }
 
   // ngOnInit method properly declared
@@ -87,8 +112,5 @@ export class PlayerSummaryComponent implements OnInit{
     // });
   }
 
-  // ngOnDestroy method properly declared, even if it's empty
-  // ngOnDestroy(): void {
-  //   // Cleanup logic (if needed)
-  // }
+  
 }
