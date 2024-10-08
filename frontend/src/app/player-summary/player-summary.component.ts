@@ -122,6 +122,7 @@ export class PlayerSummaryComponent implements OnInit{
   }
 
   calculate3PTFG(threePointersAttempted: number, threePointersMade: number): string{
+    if (threePointersAttempted == 0) return "0.0";
     return ((threePointersMade/threePointersAttempted * 100)).toFixed(1);
   }
 
