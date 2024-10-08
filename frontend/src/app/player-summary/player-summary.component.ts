@@ -126,6 +126,7 @@ export class PlayerSummaryComponent implements OnInit{
   }
 
   calculateFT_FG(FT_Attempted:number, FT_Made:number): string{
+    if (FT_Attempted == 0) return "0.0";
     return ((FT_Made/FT_Attempted) * 100).toFixed(1);
   }
   
