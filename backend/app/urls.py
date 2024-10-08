@@ -20,4 +20,6 @@ urlpatterns = [
     re_path(r'^api/v1/playerSummary/(?P<playerName>[\w\s]+)$', players.PlayerSummary.as_view(), name='player_summary'),
 
     re_path(r'^api/v1/playerList$', players.PlayersList.as_view(), name='players_list'),
+
+    re_path(r'^api/v1/playerAutocomplete$', players.PlayerAutocomplete.as_view(), name='player_autocomplete'),
 ]

@@ -44,4 +44,12 @@ export class PlayersService extends BaseService {
       }
     ));
   }
+
+  // API endpoint for autocomplete
+  getPlayerAutoComplete(query: string): Observable<any>{
+    const endpoint = `${this.baseUrl}/playerAutocomplete?query=${query}`;
+    return this.http.get(endpoint).pipe(
+      map((data: any) => data.players)
+    );
+  }
 }
