@@ -51,6 +51,10 @@ interface PlayerSuggestion{
   name: string;
 }
 
+interface PlayerAutocompleteResponse {
+  players: PlayerSuggestion[];
+}
+
 @UntilDestroy()
 @Component({
   selector: 'player-summary-component',
@@ -75,11 +79,12 @@ export class PlayerSummaryComponent implements OnInit{
   ngOnInit(): void {}
 
   onSearchChange(query: string): void {
+    this.playerSummary = null;
     if (query.length > 1){
-      this.http.get<PlayerSuggestion[]>(`http://localhost:8000/api/v1/playerAutocomplete?query=${query}`).subscribe(
-        (data: PlayerSuggestion[]) => {
-          this.suggestions = data;
-          console.log('Autocomplete Suggestions:', this.suggestions); // Log the suggestions
+      this.http.get<PlayerAutocompleteResponse>(`http://localhost:8000/api/v1/playerAutocomplete?query=${query}`).subscribe(
+        (data) => {
+          this.suggestions = data.players;
+          console.log('Autocomplete Suggestions:', data.players); // Log the suggestions
         },
         (error) => {
           console.error('Error fetching autocomplete suggestions', error);
