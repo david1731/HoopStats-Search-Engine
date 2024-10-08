@@ -10,6 +10,7 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { PlayersService } from '../_services/players.service';
 import { HttpClient } from '@angular/common/http';
 
+
 // Define the interface for the shot
 interface Shot {
   isMake: boolean;
@@ -113,5 +114,22 @@ export class PlayerSummaryComponent implements OnInit{
         }
       );
   }
+
+  // calculate the distance between were the shot attempt was made from and the hoop
+  calculateDistance(locationX: number, locationY: number): number{
+    console.log(`Calculating distance for shot at (${locationX}, ${locationY})`);
+    return Math.sqrt(Math.pow(locationX,2) + Math.pow(locationY,2));
+  }
+
+  calculate3PTFG(threePointersAttempted: number, threePointersMade: number): string{
+    return ((threePointersMade/threePointersAttempted * 100)).toFixed(1);
+  }
+
+  calculateFT_FG(FT_Attempted:number, FT_Made:number): string{
+    return ((FT_Made/FT_Attempted) * 100).toFixed(1);
+  }
   
+  calculateFG(threePointersAttempted: number, threePointersMade: number, twoPointersAttempted: number, twoPointersMade: number): string{
+    return ((threePointersMade + twoPointersMade) / (threePointersAttempted + twoPointersAttempted) * 100).toFixed(1);
+  }
 }
