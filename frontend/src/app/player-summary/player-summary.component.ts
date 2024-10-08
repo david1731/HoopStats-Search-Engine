@@ -71,6 +71,13 @@ export class PlayerSummaryComponent implements OnInit{
     private http: HttpClient
   ) {}
 
+  // ngOnInit method properly declared
+  ngOnInit(): void {
+    // this.playersService.getPlayerSummary(1).pipe(untilDestroyed(this)).subscribe(data => {
+    //   console.log(data.apiResponse);
+    // });
+  }
+
   onSearchChange(query: string): void {
     if (query.length > 1){
       this.http.get<PlayerSuggestion[]>(`http://localhost:8000/api/v1/playerAutocomplete?query=${query}`).subscribe(
@@ -104,13 +111,5 @@ export class PlayerSummaryComponent implements OnInit{
         }
       );
   }
-
-  // ngOnInit method properly declared
-  ngOnInit(): void {
-    // this.playersService.getPlayerSummary(1).pipe(untilDestroyed(this)).subscribe(data => {
-    //   console.log(data.apiResponse);
-    // });
-  }
-
   
 }

@@ -21,5 +21,5 @@ urlpatterns = [
 
     re_path(r'^api/v1/playerList$', players.PlayersList.as_view(), name='players_list'),
 
-    re_path(r'^api/v1/playerAutocomplete$', players.PlayerAutocomplete.as_view(), name='player_autocomplete'),
+    re_path(r'^api/v1/playerAutocomplete$', players.PlayerAutoComplete.as_view(), name='player_autocomplete'),
 ]
