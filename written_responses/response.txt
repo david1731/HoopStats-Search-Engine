@@ -1,0 +1,20 @@
+Write a brief description of your database architecture (<250 words). Feel free to provide a visual representation as an aide. 
+    - The database architecture for this project is designed to store player and game data for a basketball statistics system.
+      It comprises of numerous key tables with defined relationships.
+
+    - The Players Table contains basic information about each participant, such as their unique ID and name.
+
+    - Teams Table: Contains team information, including fields for the team's id and name.
+
+    - Games Table: Stores game information such as id, date, home_team_id, and away_team_id, and references the Teams table via foreign keys.
+
+    - The PlayerStats Table contains extensive statistics for each player in a game, including areas such as minutes, points, assists, and rebounds. 
+      This table is linked to the Players and Games tables via foreign keys (player_id and game_id).
+
+    - Shots Table: Keeps track of every shot taken by players during games, including location_x and location_y coordinates and whether the shot was successful (is_made). It uses the player_id and game_id fields to refer to the Players and Games tables, respectively.
+
+    - These tables are linked together using foreign key connections, ensuring that each player's performance in each game is precisely recorded and associated with their particular teams and games.
+
+
+
+
