@@ -81,7 +81,7 @@ export class PlayerSummaryComponent implements OnInit{
 
   onSearchChange(query: string): void {
     this.playerSummary = null;
-    if (query.length > 1){
+    if (query.length >= 1){
       this.http.get<PlayerAutocompleteResponse>(`http://localhost:8000/api/v1/playerAutocomplete?query=${query}`).subscribe(
         (data) => {
           this.suggestions = data.players;
