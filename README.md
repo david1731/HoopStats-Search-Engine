@@ -65,8 +65,8 @@ The project has been designed with scalability and usability in mind, utilizing 
 * Shot: Records the location of each shot taken in a game and whether it was made or missed.
 
 ## API Endpoints:
-/api/v1/playerAutocomplete?query=<name>: Fetch player name suggestions based on a search query.
-/api/v1/playerSummary/<playerName>: Fetch detailed player statistics, including game stats and shot performance.
+* /api/v1/playerAutocomplete?query=<name>: Fetch player name suggestions based on a search query.
+* /api/v1/playerSummary/<playerName>: Fetch detailed player statistics, including game stats and shot performance.
 
 ## How to Run the Backend:
 1. Navigate to the backend directory.
