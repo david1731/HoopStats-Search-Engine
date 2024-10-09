@@ -2,7 +2,7 @@
 <div>
   <mat-form-field>
     <mat-select [(ngModel)]="playerName" [ngModelOptions]="{standalone: true}" (selectionChange)="changeParams()">
-      <mat-option *ngFor="let _ of [].constructor(31); let i = index" [value]="i + 1">{{ i + 1}}</mat-option>
+      <mat-option *ngFor="let player of players" [value]="player.name">{{ player.name }}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>

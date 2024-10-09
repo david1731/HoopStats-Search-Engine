@@ -13,7 +13,7 @@ class PlayerSummary(APIView):
         """Return player summary data based on the playerName"""
 
         try:
-            # Fetch player details using raw SQL
+            # Fetch player details 
             with connection.cursor() as cursor:
                 cursor.execute("SELECT id FROM players WHERE name ILIKE %s LIMIT 1;", [playerName])
                 player = cursor.fetchone()
@@ -23,7 +23,7 @@ class PlayerSummary(APIView):
 
                 player_id = player[0]
 
-            # Fetch all player stats and games using the correct SQL query
+            # Fetch all player stats and games 
             with connection.cursor() as cursor:
                 cursor.execute("""
                     SELECT 
@@ -108,5 +108,36 @@ class PlayerSummary(APIView):
             return Response({"error": "Internal Server Error"}, status=500)
 
 
+class PlayersList(APIView):
+    def get(self, request):
+        try:
+            # Fetch player details 
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT id,name FROM players;")
+                players = cursor.fetchall()
+            
+            #LOGGER.info(f"Players data: {players}")
+            player_list = [{"id": player[0], "name": player[1]} for player in players]
+        except Exception as e:
+            LOGGER.error(f"Error fetching player info: {str(e)}")
+            return Response({"error": "Internal Server Error"}, status=500)
+        
+        return Response(player_list)
+
+class PlayerAutoComplete(APIView):
+    def get(self, request):
+        query = request.GET.get('query', '')
+        if not query:
+            return Response({"error": "No search term provided"})
+        
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT id,name FROM players WHERE name ILIKE %s LIMIT 10", ['%' + query + '%'])
+                players = cursor.fetchall()
+                results = [{"id" : row[0], "name" : row[1]} for row in players]
+            return Response({"players": results})
+        except Exception as e:
+            LOGGER.error(f"Error fetching player autocomplete: {{str(e)}}")
+            return Response({"error": "Internal Server Error"}, status=500)
 
 

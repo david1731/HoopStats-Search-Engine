@@ -14,6 +14,21 @@ export class PlayersService extends BaseService {
     super(http);
   }
 
+  getPlayerList(): Observable<any>{
+    const endpoint = `${this.baseUrl}/playerList`;
+    return this.get(endpoint).pipe(map(
+      (data: Object) => {
+        return{
+          endpoint: endpoint,
+          apiResponse: data
+        };
+      },
+      error => {
+        return error;
+      }
+    ));
+  }
+
   getPlayerSummary(playerName: string): Observable<any> {
     const endpoint = `${this.baseUrl}/playerSummary/${playerName}`;
 
@@ -28,5 +43,13 @@ export class PlayersService extends BaseService {
           return error;
       }
     ));
+  }
+
+  // API endpoint for autocomplete
+  getPlayerAutoComplete(query: string): Observable<any>{
+    const endpoint = `${this.baseUrl}/playerAutocomplete?query=${query}`;
+    return this.http.get(endpoint).pipe(
+      map((data: any) => data.players)
+    );
   }
 }

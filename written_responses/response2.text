@@ -1,0 +1,34 @@
+Write a brief (<500 words) description of your approach, including answers to the following questions:
+1) What are the most important goals of your autocomplete design and how are those goals
+achieved?
+2) What technologies would your system leverage?
+
+
+Overview of Approach: The major achievement of this project will involve materializing a basketball statistics system with an autocomplete search feature. 
+As explained, the functionality will enable users to instantaneously look up players and dynamically display game statistics in depth.
+ 1) Major Objectives of Designing Autocomplete:
+    a) Fast and Relevant Suggestions: The main goal is to suggest player names to users in real-time as they type, to speed up the searching process. 
+    This shall be achieved by having the frontend fire requests from the API once the user has typed at least more than one character. 
+    The backend shall execute a case-insensitive search returning the top 10 matching player names so that the results remain fast and relevant.
+
+    b) Smooth Refresh of Data: Another objective was to ensure that the very instance the user starts typing a new name, everything cleans up from the prior search results and 
+    player data. This is to avoid showing data that is no longer valid or simply not correct. The UI was to reset the playerSummary object upon detection of input.
+
+    c) Friendly User Experience: Autocomplete will make it possible for a user to see suggestions in a dropdown while they type. The user can easily select a player without
+    having to type the full name, and game statistics will be fetched for that player upon selection and displayed neatly.
+
+ 2) Technologies Used:
+    Frontend:
+    - Angular: ngModel is a two-way data binding in Angular that shares models across all instances. HttpClient will be used to handle API calls that fetch the autocomplete 
+      suggestions and player information. Event handling to immediately update at each change while the user is typing.
+    - Bootstrap: It will be used for responsive UI components where components like input group and list are built to give a sleek and modern look.
+
+    Backend:
+    - Django: The APIView of Django will be used by the back-end to create the endpoints for autocomplete as well as player statistics. 
+      PlayerAutocomplete endpoint does the SQL queries to search the player names in the PostgreSQL database.
+    - PostgreSQL: PostgreSQL will serve as the database, which will support the relational storage of data about players, games, and stats. 
+      The ILIKE operator of SQL does case insensitive searches, while LIMIT 10 keeps the response size manageable.
+
+Achievements:
+    - This design encompasses an autocomplete system that is both quick and very friendly to the user. The usage of Angular on the front-end for real time interaction, 
+    Django handling all APIs with robustness, and PostgreSQL for efficient querying together present a responsive and maintainable system.

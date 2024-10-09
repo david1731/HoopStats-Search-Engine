@@ -22,6 +22,7 @@ export class PlayerSummaryResponseComponent implements OnInit, OnDestroy {
   endpoint: any;
   apiResponse: any;
   playerName: string = '';
+  players: any[] = [];
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -32,11 +33,20 @@ export class PlayerSummaryResponseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.fetchApiResponse();
+    this.fetchPlayerList();  
+  }
+
+  fetchPlayerList(): void{
+    this.playersService.getPlayerList().pipe(untilDestroyed(this)).subscribe(data => {
+      this.players = data.apiResponse;
+    })
   }
 
   changeParams(): void {
-    this.fetchApiResponse();
+    // this.fetchApiResponse();
+    if (this.playerName){
+      this.fetchApiResponse();
+    }
   }
 
   fetchApiResponse(): void {
