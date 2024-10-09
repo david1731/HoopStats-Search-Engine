@@ -133,4 +133,10 @@ player-summary-component {
       font-size: 0.9rem;
     }
   }
+
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+  }
 }
