@@ -1,13 +1,12 @@
 
 # HoopStats Search Engine
-* HoopStats Search Engine is a web application designed to search and display basketball player statistics. 
+* HoopStats Search Engine is a web application designed to search and display basketball player statistics from the movie Space Jam. 
 * It includes both frontend and backend components, allowing users to easily query player data, display statistics, and view player performance across multiple games.
 
 # Introduction
 * The HoopStats Search Engine is a basketball statistics platform that allows users to search for players by name and retrieve detailed game stats. 
 * The application is built with a robust frontend that interacts with a backend API to provide real-time data to the users.
-
-The project has been designed with scalability and usability in mind, utilizing modern web development technologies for both the frontend and backend.
+* The project has been designed with scalability and usability in mind, utilizing modern web development technologies for both the frontend and backend.
 
 # Technologies Used
 ## Frontend:
@@ -42,9 +41,13 @@ The project has been designed with scalability and usability in mind, utilizing 
 ## How to Run the Frontend:
 1. Navigate to the frontend directory.
 2. Install the dependencies:
-    * npm install
+    ```
+    npm install
+    ```
 3. Run the development server:
-    * npm start
+    ```
+    npm start
+    ```
 4. Open http://localhost:4200 to view it in the browser.
 
 # Backend Overview
@@ -64,25 +67,42 @@ The project has been designed with scalability and usability in mind, utilizing 
 * Player Stats: Stores game-specific statistics for each player (e.g., minutes played, points scored).
 * Shot: Records the location of each shot taken in a game and whether it was made or missed.
 
+## Populating Database
+* The database is populated with raw game and player information using a custom Python script. 
+* This script reads raw game statistics and player data, processes the information, and inserts it into the PostgreSQL database.
+
+* The script can be run as follows after setting up the database:
+    ```
+    python populate_database.py
+    ```
+* This script ensures that all game data, including shot locations, field goal attempts, and other player stats, are accurately recorded for querying by the frontend.
+
 ## API Endpoints:
-* /api/v1/playerAutocomplete?query=<name>: Fetch player name suggestions based on a search query.
-* /api/v1/playerSummary/<playerName>: Fetch detailed player statistics, including game stats and shot performance.
+* `/api/v1/playerAutocomplete?query=<name>`: Fetch player name suggestions based on a search query.
+* `/api/v1/playerSummary/<playerName>`: Fetch detailed player statistics, including game stats and shot performance.
 
 ## How to Run the Backend:
 1. Navigate to the backend directory.
 2. Create and activate a virtual environment:
-    * python -m venv .venv
-    * source .venv/bin/activate
+    ```
+    python -m venv .venv
+    source .venv/bin/activate
+    ```
 
 3. Install the dependencies:
-    * pip install -r requirements.txt
+    ```
+    pip install -r requirements.txt
+    ```
 
 4. Apply database migrations:
-    * python manage.py migrate
+    ```
+    python manage.py migrate
+    ```
 
 5. Run the development server:
-    * python manage.py runserver
-
+    ```
+    python manage.py runserver
+    ```
 6. The backend will be available at http://localhost:8000.
 
 # Installation
@@ -94,6 +114,8 @@ The project has been designed with scalability and usability in mind, utilizing 
 
 ## Steps:
 1. Clone the repository:
-* git clone <repository-url>
+    ```
+    git clone <repository-url>
+    ```
 2. Follow the instructions in the Frontend and Backend sections to install and run the application.
 
