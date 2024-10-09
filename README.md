@@ -8,6 +8,13 @@
 * The application is built with a robust frontend that interacts with a backend API to provide real-time data to the users.
 * The project has been designed with scalability and usability in mind, utilizing modern web development technologies for both the frontend and backend.
 
+# Demo
+https://github.com/user-attachments/assets/a32a3428-fb56-4ec0-92e5-6e5d13448caf
+
+https://github.com/user-attachments/assets/9099115e-80a3-4d47-9448-acfeefee1893
+
+
+
 # Technologies Used
 ## Frontend:
 * Angular: A robust framework for building single-page applications.
