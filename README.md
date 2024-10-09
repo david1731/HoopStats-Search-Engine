@@ -1,110 +1,99 @@
 
-# OKC Technical Project Deliverable
+# HoopStats Search Engine
+* HoopStats Search Engine is a web application designed to search and display basketball player statistics. 
+* It includes both frontend and backend components, allowing users to easily query player data, display statistics, and view player performance across multiple games.
 
-### Internship Program Disclosures
+# Introduction
+* The HoopStats Search Engine is a basketball statistics platform that allows users to search for players by name and retrieve detailed game stats. 
+* The application is built with a robust frontend that interacts with a backend API to provide real-time data to the users.
 
-* You must be eligible to work in the United States to be able to qualify for this internship.
-  
-* The pay for this internship is the greater of your local minimum wage and $13/hour.
+The project has been designed with scalability and usability in mind, utilizing modern web development technologies for both the frontend and backend.
 
-* This application is for the purposes of an internship taking place in the Spring, Summer, or Fall of 2025.
+# Technologies Used
+## Frontend:
+* Angular: A robust framework for building single-page applications.
+* Bootstrap 5: For responsive design and modern UI components.
+* TypeScript: For static typing and clean code structure.
+* SCSS: For custom styling and flexibility in design.
+* Tailwind CSS: A utility-first CSS framework to streamline the design process.
 
-### 1. Backend Engineering
+## Backend:
+* Django: A high-level Python web framework used for developing the backend API.
+* Django REST Framework: For creating RESTful APIs.
+* PostgreSQL: A powerful, open-source object-relational database system.
+* Gunicorn: WSGI HTTP Server for running the Django application.
 
-* Architect and implement a normalized PostgreSQL database to store the data provided in `backend/raw_data`. All information from the original data should be accessible via the database.
+# Frontend Overview
+* The frontend of HoopStats is built using Angular and styled using Bootstrap 5 and Tailwind CSS. 
+* It provides a clean and interactive user interface for searching player stats, displaying game summaries, and visualizing player performances.
 
-* Write a brief description of your database architecture (<250 words). Feel free to provide a visual representation as an aide. Submit relevant responses in the `written_responses` folder provided.
+## Features:
+* Search for players by name.
+* Autocomplete feature for player names.
+* Display detailed player statistics including game history, shots taken, and field goals made.
+* Responsive design that works across mobile, tablet, and desktop devices.
 
-* In the programming language of your choice, write a process to load the dataset into your PostgreSQL database. Ensure that this process can run repeatedly without duplicating or obscuring references in the database. Include the source code of your process in the `backend/scripts` folder. Note: You can feel free to utilize the power of Django models and migrations to achieve this step.
-
-* After loading the data, export the state of your database using `pg_dump -U okcapplicant okc > dbexport.pgsql`. Include `dbexport.psql` in the `backend/scripts` folder.
-
-* The skeleton of an API View `PlayerSummary` can be found in `backend/app/views/players.py`. Implement this API to return a player summary that mimics the structure of `backend/app/views/sample_response/sample_response.json`. Feel free to import additional modules/libraries in order to do this, but ensure that the `backend/requirements.txt` is updated accordingly. Viewing http://localhost:4200/player-summary-api allows you to see the output of your API, given the playerID parameter provided in the user input.
-
-### 2. Frontend Engineering
-
-* The `player-summary` component, which is viewable at http://localhost:4200/player-summary, makes a call to an API endpoint at `/api/v1/playerSummary/{playerID}` that returns player summary data. One component of the player summary data are the player's shots in each game, note that:
-
-   * The shot's x and y coordinates are provided and are measured in feet
-   * The location of each shot is relative to the center of the basket, per `court_diagram.jpg` in this repository
-
-* Within the `player-summary` component found in `frontend/src/app/player-summary/`, create an interface that describes the player summary data returned from the API.
-
-* Feel free to import additional modules of your choice, and design the interface however you wish. Just make sure that the `package.json` and `package-lock.json` are updated accordingly.
-
-* Upon completion of the Frontend Engineering deliverable, please upload to this repo screenshots or screen captures that demonstrate your UI.
-
-
-# Application Setup
-In order to complete the Backend Engineering or Frontend Engineering deliverables, you will need to do all of the following setup items. Please follow the instructions below, from top to bottom sequentially, to ensure that you are set up to run the app. The app is run on an Angular frontend, Django backend, and a PostgreSQL database.
-
-## Set up database
-1. Download and install PostgreSQL from https://www.postgresql.org/download/
-2. Ensure PostgreSQL is running, and in a terminal run
-    ```
-    createuser okcapplicant --createdb;
-    createdb okc;
-    ```
-3. connect to the okc database to grant permissions `psql okc`
-    ```
-    create schema app;
-    alter user okcapplicant with password 'thunder';
-    grant all on schema app to okcapplicant;
-    ```
+## UI Design:
+* Bootstrap 5 and Tailwind CSS were used to create a modern, user-friendly interface.
+* The input fields, buttons, and navigation tabs are styled to provide visual feedback and an intuitive user experience.
+* The game statistics are displayed in a table format for easy readability, and the shots are listed in a two-column layout to reduce vertical scrolling.
 
 
-## Backend
+## How to Run the Frontend:
+1. Navigate to the frontend directory.
+2. Install the dependencies:
+    * npm install
+3. Run the development server:
+    * npm start
+4. Open http://localhost:4200 to view it in the browser.
 
-### 1. Install pyenv and virtualenv
+# Backend Overview
+* The backend of HoopStats is built using Django and Django REST Framework. 
+* It serves as the API layer that provides player data and game statistics to the frontend.
 
-Read about pyenv here https://github.com/pyenv/pyenv as well as info on how to install it.
-You may also need to install virtualenv in order to complete step 2.
+## Features:
+* RESTful API endpoints for searching and fetching player data.
+* SQL queries optimized to fetch player stats and game performance efficiently.
+* Error handling for invalid queries and missing data.
+* Integration with PostgreSQL for data storage.
 
-### 2. Installing Prerequisites
-The steps below attempt to install Python version 3.10.1 within your pyenv environment. If you computer is unable to install this particular version, you can feel free to use a version that works for you, but note that you may also be required to update existing parts of the codebase to make it compatible with your installed version.
-```
-cd root/of/project
-pyenv install 3.10.1
-pyenv virtualenv 3.10.1 okc
-pyenv local okc
-eval "$(pyenv init -)" (may or may not be necessary)
-pip install -r backend/requirements.txt
-```
+## Database Schema:
+* Player: Contains player information like name and ID.
+* Teams: Contains team information like name and ID.
+* Games: Contains game information like date and ID. 
+* Player Stats: Stores game-specific statistics for each player (e.g., minutes played, points scored).
+* Shot: Records the location of each shot taken in a game and whether it was made or missed.
 
-### 3. Starting the Backend
-Start the backend by running the following commands
-```
-cd /path/to/project/backend
-python manage.py runserver
-```
-The backend should run on http://localhost:8000/.
+## API Endpoints:
+/api/v1/playerAutocomplete?query=<name>: Fetch player name suggestions based on a search query.
+/api/v1/playerSummary/<playerName>: Fetch detailed player statistics, including game stats and shot performance.
 
+## How to Run the Backend:
+1. Navigate to the backend directory.
+2. Create and activate a virtual environment:
+    * python -m venv .venv
+    * source .venv/bin/activate
 
-## Frontend
+3. Install the dependencies:
+    * pip install -r requirements.txt
 
-### 1. Installing Prerequisites
-Install Node.js (16.x.x), then run the following commands
-```
-cd /path/to/project/frontend
-# Install Angular-Cli
-npm install -g @angular/cli@12.1.0 typescript@4.6.4 --force
-# Install dependencies
-npm install --force
-```
+4. Apply database migrations:
+    * python manage.py migrate
 
-### 2. Starting the Frontend
-Start the frontend by running the following commands
-```
-cd /path/to/project/frontend
-npm start
-```
-The frontend should run on http://localhost:4200/. Visit this address to see the app in your browser.
+5. Run the development server:
+    * python manage.py runserver
 
+6. The backend will be available at http://localhost:8000.
 
-# SUBMISSION.md
-Please fill out the SUBMISSION.md file to ensure we have your name attached to the project.
+# Installation
 
+## Prerequisites:
+* Node.js: Ensure you have Node.js (v16.20.x) installed for the frontend.
+* Python 3.x: Required for running the Django backend.
+* PostgreSQL: Set up a PostgreSQL database for storing player and game data.
 
-# Questions?
+## Steps:
+1. Clone the repository:
+* git clone <repository-url>
+2. Follow the instructions in the Frontend and Backend sections to install and run the application.
 
-Email datasolutions@okcthunder.com
