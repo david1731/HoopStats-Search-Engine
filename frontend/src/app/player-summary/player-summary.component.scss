@@ -10,11 +10,14 @@ player-summary-component {
 /* Input Group */
 .input-group {
   position: relative;
+  display: flex;
+  flex-direction: row;
   input {
     border-radius: 5px 0 0 5px;
     box-shadow: none;
     padding: 10px 15px;
     font-size: 1.1rem;
+    width: 100%;
   }
 
   button {
@@ -25,6 +28,7 @@ player-summary-component {
     color: white;
     border: none;
     cursor: pointer;
+    white-space: nowrap;
     &:hover {
       background-color: #0056b3;
     }
@@ -100,7 +104,7 @@ player-summary-component {
   color: #dc3545;
 }
 
-#search-button{
+#search-button {
   background-color: #8b5cf6;
 }
 
@@ -112,6 +116,9 @@ player-summary-component {
 
   .input-group {
     flex-direction: column;
+    input, button {
+      width: 100%;
+    }
 
     input {
       margin-bottom: 10px;
@@ -119,7 +126,6 @@ player-summary-component {
     }
 
     button {
-      width: 100%;
       border-radius: 5px;
     }
   }
@@ -144,3 +150,18 @@ player-summary-component {
     display: block;
   }
 }
+
+@media (min-width: 769px) {
+  .input-group {
+    flex-direction: row;
+    input {
+      width: auto;
+      flex-grow: 1;
+    }
+
+    button {
+      width: auto;
+    }
+  }
+}
+
