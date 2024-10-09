@@ -15,14 +15,14 @@
       <div class="input-group mb-3">
         <input
           type="text"
-          class="form-control"
+          class="form-control form-control-sm"
           [(ngModel)]="searchQuery"
           placeholder="Enter the player's Name"
           aria-label="Search Query"
           aria-describedby="search-button"
           (input)="onSearchChange(searchQuery)"
         />
-        <button class="btn" id="search-button" (click)="fetchPlayerSummary(searchQuery)">
+        <button class="btn form-control-sm" id="search-button" (click)="fetchPlayerSummary(searchQuery)">
           Search
         </button>
       </div>
