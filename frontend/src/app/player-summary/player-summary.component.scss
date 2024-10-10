@@ -106,6 +106,7 @@ player-summary-component {
 
 #search-button {
   background-color: #8b5cf6;
+
 }
 
 /* Responsive */
@@ -125,13 +126,14 @@ player-summary-component {
       border-radius: 5px;
     }
 
-    button {
-      border-radius: 5px;
-    }
   
     #search-button{
       border-radius: 25px;
     }
+  }
+
+  button{
+    border-radius: 25px;
   }
 
   .player-summary {
